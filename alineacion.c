@@ -9,7 +9,7 @@
    la macro. Ten en cuenta que la macro no puede ocupar más de una línea.
 
    TODO: Corrige la macro ALIGN_UP aquí después de entender el proceso */
-#define ALIGN_UP(addr, size) addr-size
+#define ALIGN_UP(addr, size) addr + (size-1) & ~(size-1)
 
 int main(void)
 {
@@ -23,7 +23,10 @@ int main(void)
 
     /* 1. Calcular la dirección alineada manualmente */
     /* TODO: Alinear addr al siguiente múltiplo de PAGE_SIZE (4096) */
-    aligned_addr = 0; /* Corrige esta línea */
+    aligned_addr = addr + (PAGE_SIZE-1) & ~(PAGE_SIZE-1); 
+
+
+     /* Corrige esta línea */
 
     /* 2. Imprimir resultados */
     printf("Dirección original: 0x%08X\n", addr);
