@@ -24,6 +24,9 @@
 #include "proc.h"
 #include "e9_system.h"
 
+#define OFFSET_SEG_TO_LINEAR(ptr)
+#define LINEAR_TO_OFFSET_SEG(addr)
+
 /* Prototype declarations for PRIVATE functions. */
 FORWARD _PROTOTYPE(void announce, (void));
 FORWARD _PROTOTYPE(void shutdown, (timer_t * tp));
@@ -34,7 +37,22 @@ FORWARD _PROTOTYPE(void shutdown, (timer_t * tp));
 PRIVATE void analizar_memoria(void)
 {
   const int ejemplo = 42;
+  uint32_t logica= (uint32_t) ejemplo;
+  uint32_t dir_fisica= (uint32_t)kinfo.data_base+ logica;
+  uint32_t dir_fisica2= 0x000FFFF5;
+  uint32_t desplazamiento = dir_fisica2 - kinfo.data_base;
   e9_printf("&ejemplo: 0x%08X\n", &ejemplo);
+  e9_printf("&kinfo.data_base: 0x%08X\n", &kinfo.data_base);
+  e9_printf("&dir lineal de ejemplo: 0x%08X\n", &dir_fisica);
+
+  e9_printf("contenido &dir lineal 0x000FFFF5 : 0x%08X\n", &dir_fisica);  
+
+  
+  e9_printf("Dir. lineal de ejemplo con macro: 0x%08X\n",
+  OFFSET_SEG_TO_LINEAL(&ejemplo));
+  e9_printf("Contenido de la dir. fís. 0x000FFFF5 con macro: %s\n",
+  LINEAL_TO_OFFSET_SEG(dir_fisica_fecha));
+
 }
 
 /*===========================================================================*
